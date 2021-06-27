@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react"
+import {number} from 'prop-types';
 require("./index.less");
 
 const PageInfo = () => {
@@ -7,6 +8,7 @@ const PageInfo = () => {
     const [currentDescription, setCurrentDescription] = useState<string>();
     const [currentAuthor, setCurrentAuthor] = useState<string>();
     const [currentTitle, setCurrentTitle] = useState<string>();
+
     useEffect(() => {
         const bg: any = chrome.extension.getBackgroundPage();
         setCurrentKeyword(bg?.test1()?.pageInfo?.keyword);
@@ -61,4 +63,4 @@ const PageInfo = () => {
     </div>
 };
 
-export default PageInfo;
+export default React.memo(PageInfo);

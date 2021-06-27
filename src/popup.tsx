@@ -2,6 +2,8 @@ import React, {useCallback, useEffect, useState} from "react";
 import ReactDOM from "react-dom";
 import {UrlMode} from './url_mode';
 import PageInfo from "./components/page-info";
+import VideoInfo from "./components/video-info";
+import cx from "classnames";
 
 require("./popup.less");
 
@@ -18,7 +20,7 @@ const Popup = () => {
 
     const navItemArr: Array<INavItem> = [
         {name: '页面信息', id: 0},
-        {name: '页面信息1', id: 1},
+        {name: '视频相关', id: 1},
         {name: '页面信息2', id: 2},
         {name: '页面信息3', id: 3},
         {name: '页面信息4', id: 4},
@@ -77,35 +79,29 @@ const Popup = () => {
      */
     const navItem = useCallback(() => {
         return navItemArr.map((item) => {
-            return <div className={'navItem'} key={item.id}>{item.name}</div>
+            return <div className={cx('navItem', navActiveIndex === item.id && 'active')} key={item.id} onClick={() => setNavItemActiveIndex(item.id)}>{item.name}</div>
         })
-    }, []);
+    }, [navActiveIndex]);
     const showContent = useCallback(() => {
-        return
-    }, []);
+        switch (navActiveIndex) {
+            case 0:
+                return <PageInfo/>;
+            case 1:
+                return <VideoInfo/>;
+            default:
+                return <PageInfo/>;
+        }
+    }, [navActiveIndex]);
     return (
         <>
             <div className={'root'}>
-                {/*<ul>*/}
-                {/*    <li>Current URL: {currentURL}</li>*/}
-                {/*    <li>Current Time: {new Date().toLocaleTimeString()}</li>*/}
-                {/*</ul>*/}
-                {/*<button*/}
-                {/*    onClick={() => setCount(count + 1)}*/}
-                {/*    style={{marginRight: "5px"}}*/}
-                {/*>*/}
-                {/*    count up*/}
-                {/*</button>*/}
-                {/*<button onClick={() => selectMockMode('mock')}> 切换MOCK模式</button>*/}
-                {/*<button onClick={() => selectMockMode('vconsole')}> 切换MOCK模式</button>*/}
                 <div className={'navContainer'}>
                     {navItem()}
                 </div>
                 <div className={'showContainer'}>
-                    <PageInfo/>
+                    {showContent()}
                 </div>
             </div>
-
         </>
     );
 };

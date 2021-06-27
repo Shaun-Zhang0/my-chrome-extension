@@ -17,6 +17,7 @@
     "url": "https://github.com/chibat/chrome-extension-typescript-starter.git"
   },
   "dependencies": {
+    "classnames": "^2.3.1",
     "css-loader": "^5.2.4",
     "less": "^4.1.0",
     "less-loader": "5.0",
