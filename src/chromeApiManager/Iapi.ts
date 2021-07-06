@@ -4,9 +4,13 @@ interface Iapi {
 }
 
 interface Iextension {
-    getBackground(): Object // chrome.extension.getBackground()
+    getBackground: Function// chrome.extension.getBackground()
+}
+
+interface ICallBack {
+    (params: Object, callback: () => void): any
 }
 
 interface Itabs {
-    query(params: Object): void // chrome.extension.query()
+    query: ICallBack // chrome.extension.query()
 }

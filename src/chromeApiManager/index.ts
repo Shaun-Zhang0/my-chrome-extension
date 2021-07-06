@@ -1,5 +1,11 @@
 class chromeExtension {
-    public createApiFactory(apiType: new() => Iapi): Iapi {
-
+    public static createApiFactory(type:String):Iapi{
+        let apiInstance = null;
+        if(type==='mock'){
+            apiInstance = new MockApi();
+        }else{
+            apiInstance = new ChromeApi();
+        }
+        return apiInstance;
     }
 }

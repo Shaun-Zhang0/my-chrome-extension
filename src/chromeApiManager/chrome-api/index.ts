@@ -1,12 +1,12 @@
 class ChromeApi implements Iapi {
     public extension = {
-        getBackground(): Object {
-            return chrome.extension.getBackground();
+        getBackground: function () {
+            return chrome.extension.getBackgroundPage();
         }
     };
     public tabs = {
-        query(params: Object): void {
-            return chrome.tabs.query({...params})
+        query: function (params: Object, callback: () => void): void {
+            return chrome.tabs.query(params, callback)
         }
     }
 }
