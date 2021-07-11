@@ -3,7 +3,7 @@ class MockApi implements Iapi {
         getBackground(): Object | Window {
             return {}
         }
-    }
+    };
     public tabs = {
         query: function (params: Object): Object {
             return {}
