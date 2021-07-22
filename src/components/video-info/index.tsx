@@ -18,10 +18,8 @@ const VideoInfo = () => {
         xhr.open('get', videoUrl, true);
         xhr.responseType = 'blob';
         xhr.onreadystatechange = function () {
-            if (this.readyState == this.HEADERS_RECEIVED) {
-                const headers = this.getAllResponseHeaders()?.trim().split(/[\r\n]+/)
-
-                // Create a map of header names to values
+            if (xhr.status === 200) {
+                const headers = this.getAllResponseHeaders()?.trim().split(/[\r\n]+/);
                 let headerMap: { [k: string]: any } = {};
                 headers.forEach(function (line) {
                     let parts = line.split(': ');
@@ -30,7 +28,6 @@ const VideoInfo = () => {
                     headerMap[String(header)] = value;
                 });
                 setVideoSize(headerMap['content-length']);
-
                 videoEl.current && videoEl.current.play();
                 const videoDuration = getVideoDuration();
                 videoDuration && setVideoRate(Math.floor(headerMap['content-length'] / 1000 * 8 / videoDuration))
@@ -52,9 +49,9 @@ const VideoInfo = () => {
             <input className={'form-input'} onChange={getVideoUrl} value={videoUrl}/>
         </div>
         <div className={"form-submit"} onClick={submit}>确定</div>
-        <video className={'video'} ref={videoEl} src={videoUrl}/>
+        <video className={'video'} ref={videoEl} src={videoUrl} muted crossOrigin="anonymous"/>
         视频码率:
-         <input value={videoRate}/>
+        <input value={videoRate} readOnly/>
     </div>
 };
 export default React.memo(VideoInfo);
