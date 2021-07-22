@@ -46,7 +46,7 @@ const VideoInfo = () => {
     };
 
     return <div className={"video-form"}>
-        <div className={"form-title"}>计算视频地址的码率</div>
+        <div className={"form-title"}>查看线上视频的码率</div>
         <div className={"form-item"}>
             <label className={'form-label'}>视频地址</label>
             <input className={'form-input'} onChange={getVideoUrl} value={videoUrl}/>

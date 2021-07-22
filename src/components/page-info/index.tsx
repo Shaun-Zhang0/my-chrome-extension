@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {number} from 'prop-types';
+
 require("./index.less");
 
 const PageInfo = () => {
@@ -52,7 +53,8 @@ const PageInfo = () => {
             <div className={'pageInfoValue'}>
                 {currentDescription}
             </div>
-        </div><div className={'pageInfoRow'}>
+        </div>
+        <div className={'pageInfoRow'}>
             <div className={'pageInfoRowHeader'}>
                 author
             </div>
