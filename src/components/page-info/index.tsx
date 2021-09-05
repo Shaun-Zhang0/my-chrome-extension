@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {number} from 'prop-types';
-require("./index.less");
+
+const styles = require("./index.less");
 
 const PageInfo = () => {
     const [currentURL, setCurrentURL] = useState<string>();
@@ -10,53 +11,55 @@ const PageInfo = () => {
     const [currentTitle, setCurrentTitle] = useState<string>();
 
     useEffect(() => {
-        const bg: any = chrome.extension.getBackgroundPage();
-        setCurrentKeyword(bg?.test1()?.pageInfo?.keyword);
-        setCurrentDescription(bg?.test1()?.pageInfo?.description);
-        setCurrentAuthor(bg?.test1()?.pageInfo?.author);
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             setCurrentURL(tabs[0].url);
-            setCurrentTitle(tabs[0].title)
+            setCurrentTitle(tabs[0].title);
+            const bg: any = chrome.extension.getBackgroundPage();
+            setCurrentKeyword(bg?.test1()?.pageInfo?.keyword);
+            setCurrentDescription(bg?.test1()?.pageInfo?.description);
+            setCurrentAuthor(bg?.test1()?.pageInfo?.author);
         });
     }, []);
-    return <div className={'pageInfoRoot'}>
-        当前页面信息:
-        <div className={'pageInfoRow'}>
-            <div className={'pageInfoRowHeader'}>
-                当前页面url
+    return <div className={styles.pageInfoRoot}>
+        <div className={styles.pageTitle}>当前页面信息：</div>
+        <div className={styles.pageInfoRow}>
+        {/*<div className={styles.pageInfoRow}>*/}
+            <div className={styles.pageInfoRowHeader}>
+                当前页面地址 / url
             </div>
-            <div className={'pageInfoValue'}>
+            <div className={styles.pageInfoValue}>
                 {currentURL}
             </div>
         </div>
-        <div className={'pageInfoRow'}>
-            <div className={'pageInfoRowHeader'}>
-                title
+        <div className={styles.pageInfoRow}>
+            <div className={styles.pageInfoRowHeader}>
+                title / 标题
             </div>
-            <div className={'pageInfoValue'}>
+            <div className={styles.pageInfoValue}>
                 {currentTitle}
             </div>
         </div>
-        <div className={'pageInfoRow'}>
-            <div className={'pageInfoRowHeader'}>
-                keyword
+        <div className={styles.pageInfoRow}>
+            <div className={styles.pageInfoRowHeader}>
+                keyword / 关键字
             </div>
-            <div className={'pageInfoValue'}>
+            <div className={styles.pageInfoValue}>
                 {currentKeyword}
             </div>
         </div>
-        <div className={'pageInfoRow'}>
-            <div className={'pageInfoRowHeader'}>
-                description
+        <div className={styles.pageInfoRow}>
+            <div className={styles.pageInfoRowHeader}>
+                description / 描述
             </div>
-            <div className={'pageInfoValue'}>
+            <div className={styles.pageInfoValue}>
                 {currentDescription}
             </div>
-        </div><div className={'pageInfoRow'}>
-            <div className={'pageInfoRowHeader'}>
-                author
+        </div>
+        <div className={styles.pageInfoRow}>
+            <div className={styles.pageInfoRowHeader}>
+                author / 作者
             </div>
-            <div className={'pageInfoValue'}>
+            <div className={styles.pageInfoValue}>
                 {currentAuthor}
             </div>
         </div>

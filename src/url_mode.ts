@@ -1,4 +1,5 @@
-export  const UrlMode:any =  {
+export const UrlMode: any = {
     mock: '__MOCK__',
-    vconsole:'__VCONSOLE__'
+    vconsole: '__VCONSOLE__',
+    debugger: '__DEBUG__'
 };

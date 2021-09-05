@@ -3,13 +3,17 @@ import ReactDOM from "react-dom";
 import {UrlMode} from './url_mode';
 import PageInfo from "./components/page-info";
 import VideoInfo from "./components/video-info";
+import UrlModes from "./components/url-modes";
+import Icon from 'antd/lib/icon';
 import cx from "classnames";
 
-require("./popup.less");
+const styles = require("./popup.less");
 
 interface INavItem {
     id: number,
-    name: string
+    name: string,
+    disable: boolean,
+    icon: string
 }
 
 const Popup = () => {
@@ -19,14 +23,10 @@ const Popup = () => {
     const [navActiveIndex, setNavItemActiveIndex] = useState<number>(0);
 
     const navItemArr: Array<INavItem> = [
-        {name: '页面信息', id: 0},
-        {name: '视频相关', id: 1},
-        {name: '页面信息2', id: 2},
-        {name: '页面信息3', id: 3},
-        {name: '页面信息4', id: 4},
-        {name: '页面信息5', id: 5},
-        {name: '页面信息6', id: 6},
-        {name: '页面信息7', id: 7},
+        {name: '页面信息', id: 0, disable: false, icon: 'info-circle'},
+        {name: '视频相关', id: 1, disable: false, icon: 'video-camera'},
+        {name: '调试模式', id: 2, disable: false, icon: 'bug'},
+        {name: '敬请期待', id: 3, disable: true, icon: 'ellipsis'},
     ];
     useEffect(() => {
         chrome.browserAction.setBadgeText({text: count.toString()});
@@ -39,47 +39,16 @@ const Popup = () => {
         });
     }, []);
 
-
-    /**
-     * 切换模式
-     * @param {string} mode 模式
-     * 例如: MOCK 对应的是__MOCK__
-     */
-    const selectMockMode = (mode: string): void => {
-        // console.log(mode)
-        if (!mode) {
-            throw new Error('mode不得为空');
-        }
-
-        chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-            const tab = tabs[0];
-            if (!tab.url) {
-            } else {
-                const currentTabUrl = tab.url.split('?')[0]; // 当前tab的URl
-                const searchParams = tab.url.split('?')[1] ? tab.url.split('?')[1] : ''; // 判断当前URL是否存在search部分 存在则提取出来
-                // // const rejectMode = '?__MOCK__';
-                const injectMode = '?' + UrlMode[mode];
-                for (let i in UrlMode) {
-                    searchParams.replace(/UrlMode[i]/g, '')
-                }
-                debugger;
-                // console.log(injectMode)
-                // debugger;
-                chrome.tabs.update(Number(currentTabID), {url: currentTabUrl + injectMode + searchParams});
-
-
-                // const newCurrentTabURl = currentTabUrl
-
-
-            }
-        })
-    };
     /**
      *  渲染选项卡列表
      */
     const navItem = useCallback(() => {
         return navItemArr.map((item) => {
-            return <div className={cx('navItem', navActiveIndex === item.id && 'active')} key={item.id} onClick={() => setNavItemActiveIndex(item.id)}>{item.name}</div>
+            return <div className={cx(styles.navItem, navActiveIndex === item.id && 'active', item.disable && 'disable')} key={item.id} onClick={() => setNavItemActiveIndex(item.id)}>
+                {/*<img src={item.icon}/>*/}
+                <Icon className={styles.navIcon} type={item.icon} />
+                <span className={styles.navItemName}>{item.name}</span>
+            </div>
         })
     }, [navActiveIndex]);
     const showContent = useCallback(() => {
@@ -88,21 +57,24 @@ const Popup = () => {
                 return <PageInfo/>;
             case 1:
                 return <VideoInfo/>;
+            case 2:
+                return <UrlModes/>;
             default:
                 return <PageInfo/>;
         }
     }, [navActiveIndex]);
+    console.log(styles);
     return (
-        <>
-            <div className={'root'}>
-                <div className={'navContainer'}>
+        <div id={'root'}>
+            <div className={styles.root}>
+                <div className={styles.navContainer}>
                     {navItem()}
                 </div>
-                <div className={'showContainer'}>
+                <div className={styles.showContainer}>
                     {showContent()}
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

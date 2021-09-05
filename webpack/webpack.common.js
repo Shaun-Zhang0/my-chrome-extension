@@ -2,13 +2,15 @@ const webpack = require("webpack");
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const srcDir = path.join(__dirname, "..", "src");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 
 module.exports = {
     entry: {
-      popup: path.join(srcDir, 'popup.tsx'),
-      options: path.join(srcDir, 'options.tsx'),
-      background: path.join(srcDir, 'background.ts'),
-      content_script: path.join(srcDir, 'content_script.ts'),
+        popup: path.join(srcDir, 'popup.tsx'),
+        options: path.join(srcDir, 'options.tsx'),
+        background: path.join(srcDir, 'background.ts'),
+        content_script: path.join(srcDir, 'content_script.ts'),
     },
     output: {
         path: path.join(__dirname, "../dist/js"),
@@ -28,11 +30,43 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
-                test: /\.less$/,
+                test: /\.(less|css)$/,
+                loader: [
+                    {
+                        loader: "style-loader",
+                        options: {
+                            esModule: false,
+                        },
+                    }, {
+                        loader: 'css-loader',
+                        options: {
+                            localIdentName: '[name]__[local]__[hash:base64:5]',
+                            modules:true,
+                            esModule: false,
+                        },
+                    },
+                    {
+                        loader: "less-loader",
+                        options: {
+                            lessOptions: {
+                                javascriptEnabled: true
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(png|jpg|gif|jpeg)$/,
                 use: [
-                    'style-loader',
-                    'css-loader',
-                    'less-loader'
+                    {
+                        loader: 'url-loader',
+                        // loader: 'file-loader',
+                        options: {
+                            esModule: false, // 这里设置为false
+                            name: '[name].[ext]',
+                            limit: 10240
+                        }
+                    }
                 ]
             }
         ],
@@ -42,8 +76,12 @@ module.exports = {
     },
     plugins: [
         new CopyPlugin({
-            patterns: [{ from: ".", to: "../", context: "public" }],
+            patterns: [{from: ".", to: "../", context: "public"}],
             options: {},
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: '[id].css'
         }),
     ],
 };

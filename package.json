@@ -10,6 +10,7 @@
     "test": "npx jest",
     "style": "prettier --write \"src/**/*.{ts,tsx}\""
   },
+  "sideEffects": false,
   "author": "",
   "license": "MIT",
   "repository": {
@@ -17,13 +18,19 @@
     "url": "https://github.com/chibat/chrome-extension-typescript-starter.git"
   },
   "dependencies": {
+    "antd": "3",
     "classnames": "^2.3.1",
-    "css-loader": "^5.2.4",
-    "less": "^4.1.0",
-    "less-loader": "5.0",
+    "css-loader": "1.0.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "2.2.0",
+    "less": "3.9.0",
+    "less-loader": "5.0.0",
+    "mini-css-extract-plugin": "1.6.2",
+    "postcss-loader": "4.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "style-loader": "^2.0.0"
+    "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1"
   },
   "devDependencies": {
     "@types/chrome": "0.0.100",
