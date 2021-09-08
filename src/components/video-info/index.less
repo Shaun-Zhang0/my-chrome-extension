@@ -1,4 +1,5 @@
 .videoForm {
+  position: relative;
   width: 100%;
   padding-top: 30px;
 }
@@ -13,7 +14,7 @@
   width: 96%;
   color: #495057;
   background-color: #fff;
-  border: 1px solid  rgb(74, 110, 224);
+  border: 1px solid rgb(74, 110, 224);
   border-radius: .25rem;
   font-weight: 400;
   line-height: 40px;
@@ -38,11 +39,22 @@
   line-height: 36px;
   margin: 10px auto 0;
   background-color: rgb(74, 110, 224);
-  border-color:  rgb(74, 110, 224);
+  border-color: rgb(74, 110, 224);
   text-align: center;
   border-radius: 8px;
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
   user-select: none;
+  cursor: pointer;
+
+  &:global(.disabled) {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
+  }
+
+  &:active {
+    opacity: 0.8;
+  }
 }
 
 .video {
@@ -59,6 +71,7 @@
   margin-bottom: 30px;
   user-select: none;
 }
+
 .videoInfoRow {
   position: relative;
   width: 400px;
@@ -80,9 +93,45 @@
   font-weight: 500;
   font-size: 16px;
 }
+
 .videoInfoValue {
   min-height: 60px;
   padding: 14px;
   word-wrap: break-word;
   white-space: normal;
+}
+
+.loadingIcon {
+  position: absolute;
+  width: 150px;
+  height: 70px;
+  left: 50%;
+  top: 100px;
+  transform: translate(-50%, -50%);
+  z-index: 200;
+  padding: 16px 24px;
+  overflow: hidden;
+  line-height: 1.5;
+  background: #fff;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+
+  img {
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    width: 32px;
+    height: 32px;
+    transform: translate(-50%, -50%);
+    user-select: none;
+  }
+}
+.loadingTips{
+  position: absolute;
+  bottom: 16%;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  color: rgb(74, 110, 224);
 }

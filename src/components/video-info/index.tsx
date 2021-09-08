@@ -1,4 +1,5 @@
 import React, {useEffect, useState, useRef} from "react"
+import cx from "classnames"
 
 const styles = require("./index.less");
 
@@ -7,6 +8,7 @@ const VideoInfo = () => {
     const [videoSize, setVideoSize] = useState(0); // 通过 XHR 的响应头的 content-length 获取。 单位: kb
     const [videoRate, setVideoRate] = useState(0); // 通过 video组件 获取视频的长度。 单位: 秒
     const [videoTime, setVideoTime] = useState(0); // video 时间
+    const [loading, setLoading] = useState(false); // 请求状态
 
     const isVideo = (path: string) => {
         return /\.(mp4|avi|wmv|mpg|mpeg|mov|rm|ram|swf|flv)/.test(path);
@@ -14,20 +16,21 @@ const VideoInfo = () => {
 
     let videoEl = useRef<HTMLVideoElement>(null);
     const getVideoUrl = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        if (isVideo(e.target.value)) {
-            setVideoUrl(e.target.value);
-        } else {
-            return;
-        }
+        setVideoUrl(e.target.value);
     };
 
 
     const submit = (): void => {
+        if (!isVideo(videoUrl) || loading) {
+            return;
+        }
+        setLoading(true);
         const xhr = new XMLHttpRequest();
         xhr.open('get', videoUrl, true);
         xhr.responseType = 'blob';
         xhr.onreadystatechange = function () {
-            if (xhr.status === 200) {
+            if (xhr.status === 200 && (xhr.readyState === 3 || xhr.readyState === 4)) {
+                setLoading(false);
                 const headers = this.getAllResponseHeaders()?.trim().split(/[\r\n]+/);
                 let headerMap: { [k: string]: any } = {};
                 headers.forEach(function (line) {
@@ -83,11 +86,15 @@ const VideoInfo = () => {
 
     return (
         <div className={styles.videoForm}>
+            {loading && <div className={styles.loadingIcon}>
+                <img src={require("./images/loading.gif")}/>
+                <div className={styles.loadingTips}>正在努力获取中...</div>
+            </div>}
             <div className={styles.pageTitle}>查看线上视频相关信息</div>
             <div className={styles.formItem}>
                 <input className={styles.formInput} onChange={getVideoUrl} value={videoUrl} placeholder={'请输入视频的地址'}/>
             </div>
-            <div className={styles.formSubmit} onClick={submit}>获取相关信息</div>
+            <div className={cx(styles.formSubmit,loading&&'disabled')} onClick={submit}>获取相关信息</div>
             <video className={styles.video} ref={videoEl} src={videoUrl} muted crossOrigin="anonymous"/>
             {videoUrl && videoRate !== 0 && videoSize !== 0 && videoInfoContainer()}
         </div>
