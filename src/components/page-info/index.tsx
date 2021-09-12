@@ -25,7 +25,7 @@ const PageInfo = () => {
         <div className={styles.pageInfoRow}>
         {/*<div className={styles.pageInfoRow}>*/}
             <div className={styles.pageInfoRowHeader}>
-                当前页面地址 / url
+                 url / 当前页面地址
             </div>
             <div className={styles.pageInfoValue}>
                 {currentURL}

@@ -1,19 +1,21 @@
 import React, {useCallback, useEffect, useState} from "react"
 import {UrlMode} from '../../url_mode';
 
-require("./index.less");
+const styles = require("./index.less");
 
 const UrlModes = () => {
     const [currentURL, setCurrentURL] = useState<string>();
     const [currentTabIndex, setCurrentTabIndex] = useState<number>();
 
     useEffect(() => {
-
+        chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+           console.log(tabs[0].url)
+        });
     }, []);
 
     const modeItem = useCallback(() => {
         return Object.keys(UrlMode).map(i => {
-            return <div className={'modeItem'} onClick={() => changeMode(UrlMode[i])}>{UrlMode[i]}</div>
+            return <div className={styles.modeItem} onClick={() => changeMode(UrlMode[i])}>{UrlMode[i]}</div>
         })
     }, []);
     /**
@@ -37,9 +39,9 @@ const UrlModes = () => {
                         newSearch = search.replace('?' + mode, '');
                     }
                     if (search.indexOf('&' + mode) > -1) {
-                        newSearch = search.replace('&' + mode, '');
+                        newSearch = '?'+search.replace('&' + mode, '');
                     }
-                    newUrl = link.origin + link.pathname + `?${newSearch}`;
+                    newUrl = link.origin + link.pathname + `${newSearch}`;
                 } else { /*当前不存在mode*/
                     let newSearch: String = search + '&' + mode;
                     newUrl = link.origin + link.pathname + `?${newSearch}`;
@@ -50,9 +52,9 @@ const UrlModes = () => {
     };
 
 
-    return <div className={'pageInfoRoot'}>
-        <div className={'header'}>调试模式</div>
-        <div className={'modeContainer'}>
+    return <div className={styles.pageInfoRoot}>
+        <div className={styles.header}>调试模式</div>
+        <div className={styles.modeContainer}>
             {modeItem()}
         </div>
     </div>
