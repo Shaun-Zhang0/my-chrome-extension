@@ -1,20 +1,19 @@
 import React, {useEffect, useState, useRef} from "react"
 import cx from "classnames"
-
 const styles = require("./index.less");
-
 const VideoInfo = () => {
     const [videoUrl, setVideoUrl] = useState("");
     const [videoSize, setVideoSize] = useState(0); // 通过 XHR 的响应头的 content-length 获取。 单位: kb
     const [videoRate, setVideoRate] = useState(0); // 通过 video组件 获取视频的长度。 单位: 秒
     const [videoTime, setVideoTime] = useState(0); // video 时间
+    const [videoFirstFrameImg,setVideoFirstFrameImg] = useState(''); // 视频首帧图
     const [loading, setLoading] = useState(false); // 请求状态
-
+    const videoFirstFrameRef: any = useRef(null); // 用于存储video第一帧的图片
     const isVideo = (path: string) => {
         return /\.(mp4|avi|wmv|mpg|mpeg|mov|rm|ram|swf|flv)/.test(path);
     };
 
-    let videoEl = useRef<HTMLVideoElement>(null);
+    let videoEl: any = useRef(null);
     const getVideoUrl = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setVideoUrl(e.target.value);
     };
@@ -55,6 +54,12 @@ const VideoInfo = () => {
     const getVideoDuration = () => {
         return videoEl.current && videoEl.current.duration;
     };
+    useEffect(() => {
+       getVideoFirstFrame();
+    }, [videoTime]);
+    /**
+     * 视频相关信息
+     */
     const videoInfoContainer = () => {
         return <React.Fragment>
             <div className={styles.videoInfoRow}>
@@ -81,7 +86,44 @@ const VideoInfo = () => {
                     {videoSize / 1000 * 8}kb
                 </div>
             </div>
+            <div className={styles.videoInfoRow}>
+                <div className={styles.videoInfoRowHeader}>首帧图片</div>
+                <div className={styles.videoInfoValue}>
+                    <img className={styles.videoFirstFrameImage} ref={videoFirstFrameRef} src={videoFirstFrameImg}/>
+                    <div className={styles.downloadImage} onClick={downloadImg}>导出图片</div>
+                </div>
+            </div>
         </React.Fragment>
+    };
+    /**
+     * 获取视频首帧图片
+     */
+    const getVideoFirstFrame = () => {
+        videoEl.current.onloadeddata = (() => {
+           setTimeout(()=>{
+               const canvas: any = document.createElement('canvas');
+               canvas.width = videoEl.current.videoWidth;
+               canvas.height = videoEl.current.videoHeight;
+               canvas.getContext('2d').drawImage(videoEl.current, 0, 0);
+
+               const img = canvas.toDataURL('image/png');
+               setVideoFirstFrameImg(img);
+           },50)
+        });
+    };
+
+    /**
+     * 导出图片
+     */
+    const downloadImg = ()=>{
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.download = `video-poster-${new Date ().getTime ()}`;
+        a.href = videoFirstFrameImg;
+        a.target = '_blank';
+        document.body.appendChild(a);
+        a.click(); // 自动触发点击a标签的click事件
+        document.body.removeChild(a);
     };
 
     return (
@@ -94,7 +136,7 @@ const VideoInfo = () => {
             <div className={styles.formItem}>
                 <input className={styles.formInput} onChange={getVideoUrl} value={videoUrl} placeholder={'请输入视频的地址'}/>
             </div>
-            <div className={cx(styles.formSubmit,loading&&'disabled')} onClick={submit}>获取相关信息</div>
+            <div className={cx(styles.formSubmit, loading && 'disabled')} onClick={submit}>获取相关信息</div>
             <video className={styles.video} ref={videoEl} src={videoUrl} muted crossOrigin="anonymous"/>
             {videoUrl && videoRate !== 0 && videoSize !== 0 && videoInfoContainer()}
         </div>

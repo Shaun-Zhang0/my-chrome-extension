@@ -60,9 +60,8 @@ module.exports = {
                 use: [
                     {
                         loader: 'url-loader',
-                        // loader: 'file-loader',
                         options: {
-                            esModule: false, // 这里设置为false
+                            esModule: false,
                             name: '[name].[ext]',
                             limit: 10240
                         }

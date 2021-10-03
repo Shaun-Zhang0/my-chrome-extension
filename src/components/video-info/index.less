@@ -58,8 +58,9 @@
 }
 
 .video {
-  display: none;
-  opacity: 0;
+  //display: none;
+  width: 0;
+  height: 0;
 }
 
 .pageTitle {
@@ -127,11 +128,34 @@
     user-select: none;
   }
 }
-.loadingTips{
+
+.loadingTips {
   position: absolute;
   bottom: 16%;
   left: 0;
   text-align: center;
   width: 100%;
   color: rgb(74, 110, 224);
+}
+.videoFirstFrame{
+  display: block;
+  width: 500px;
+  height: 300px;
+}
+
+.videoFirstFrameImage{
+  display: block;
+  width: 100%;
+  object-fit: contain;
+}
+.downloadImage{
+  border-radius: 40px;
+  width: 100px;
+  height: 30px;
+  margin: 10px auto 0;
+  background-color: #4a6ee0;
+  color: #ffffff;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
 }

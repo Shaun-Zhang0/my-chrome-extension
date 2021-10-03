@@ -29,7 +29,7 @@ const Popup = () => {
         {name: '敬请期待', id: 3, disable: true, icon: 'ellipsis'},
     ];
     useEffect(() => {
-        chrome.browserAction.setBadgeText({text: count.toString()});
+        // chrome.browserAction.setBadgeText({text: count.toString()});
     }, [count]);
 
     useEffect(() => {
