@@ -18,7 +18,9 @@ const VideoInfo = () => {
         setVideoUrl(e.target.value);
     };
 
-
+    /**
+     * 通过xhr创建一个get请求
+     */
     const submit = (): void => {
         if (!isVideo(videoUrl) || loading) {
             return;
@@ -100,6 +102,10 @@ const VideoInfo = () => {
      */
     const getVideoFirstFrame = () => {
         videoEl.current.onloadeddata = (() => {
+            /**
+             * 即时获取可能会获取不到对应的第一帧图
+             * 故采取设置一个时间较短的定时器来实现
+             */
            setTimeout(()=>{
                const canvas: any = document.createElement('canvas');
                canvas.width = videoEl.current.videoWidth;

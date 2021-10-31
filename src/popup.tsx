@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react";
 import ReactDOM from "react-dom";
-import {UrlMode} from './url_mode';
 import PageInfo from "./components/page-info";
 import VideoInfo from "./components/video-info";
 import UrlModes from "./components/url-modes";
@@ -63,7 +62,7 @@ const Popup = () => {
                 return <PageInfo/>;
         }
     }, [navActiveIndex]);
-    console.log(styles);
+
     return (
         <div id={'root'}>
             <div className={styles.root}>
