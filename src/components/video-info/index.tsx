@@ -56,6 +56,9 @@ const VideoInfo = () => {
     const getVideoDuration = () => {
         return videoEl.current && videoEl.current.duration;
     };
+    /**
+     * 更新首帧的图片
+     */
     useEffect(() => {
        getVideoFirstFrame();
     }, [videoTime]);
