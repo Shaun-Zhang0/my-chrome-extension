@@ -78,8 +78,8 @@ const Popup = () => {
 };
 
 ReactDOM.render(
-    <React.StrictMode>
+    <React.Fragment>
         <Popup/>
-    </React.StrictMode>,
+    </React.Fragment>,
     document.getElementById("root")
 );

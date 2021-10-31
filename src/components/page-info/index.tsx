@@ -1,26 +1,30 @@
 import React, {useEffect, useState} from "react"
-import {number} from 'prop-types';
-
+import {observer} from 'mobx-react';
+import useStore from "../../utils/hooks/use-store";
+import PageInfoStore from "./store"
+import {observable} from 'mobx';
 const styles = require("./index.less");
 
 const PageInfo = () => {
-    const [currentURL, setCurrentURL] = useState<string>();
-    const [currentKeyword, setCurrentKeyword] = useState<string>();
-    const [currentDescription, setCurrentDescription] = useState<string>();
-    const [currentAuthor, setCurrentAuthor] = useState<string>();
-    const [currentTitle, setCurrentTitle] = useState<string>();
-
+    const store = useStore(() => new PageInfoStore());
+    // const [currentURL, setCurrentURL] = useState<string>('');
+    // const [currentKeyword, setCurrentKeyword] = useState<string>('');
+    // const [currentDescription, setCurrentDescription] = useState<string>('');
+    // const [currentAuthor, setCurrentAuthor] = useState<string>('');
+    // const [currentTitle, setCurrentTitle] = useState<string>('');
     useEffect(() => {
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-            setCurrentURL(tabs[0].url);
-            setCurrentTitle(tabs[0].title);
-            const bg: any = chrome.extension.getBackgroundPage();
-            setCurrentKeyword(bg?.test1()?.pageInfo?.keyword);
-            setCurrentDescription(bg?.test1()?.pageInfo?.description);
-            setCurrentAuthor(bg?.test1()?.pageInfo?.author);
+            // setCurrentURL(tabs[0].url);
+            // store.currentUrl = tabs[0].url
+            store.setCurrentUrl(tabs[0].url);
+            // setCurrentTitle(tabs[0].title);
+            // const bg: any = chrome.extension.getBackgroundPage();
+            // setCurrentKeyword(bg?.test1()?.pageInfo?.keyword);
+            // setCurrentDescription(bg?.test1()?.pageInfo?.description);
+            // setCurrentAuthor(bg?.test1()?.pageInfo?.author);
         });
     }, []);
-    return <div className={styles.pageInfoRoot}>
+    return <div className={styles.pageInfoRoot} key={'123123123'}>
         <div className={styles.pageTitle}>当前页面信息：</div>
         <div className={styles.pageInfoRow}>
         {/*<div className={styles.pageInfoRow}>*/}
@@ -28,7 +32,7 @@ const PageInfo = () => {
                  url / 当前页面地址
             </div>
             <div className={styles.pageInfoValue}>
-                {currentURL}
+                {store.currentUrl}
             </div>
         </div>
         <div className={styles.pageInfoRow}>
@@ -36,7 +40,7 @@ const PageInfo = () => {
                 title / 标题
             </div>
             <div className={styles.pageInfoValue}>
-                {currentTitle}
+                {/*{currentTitle}*/}
             </div>
         </div>
         <div className={styles.pageInfoRow}>
@@ -44,7 +48,7 @@ const PageInfo = () => {
                 keyword / 关键字
             </div>
             <div className={styles.pageInfoValue}>
-                {currentKeyword}
+                {/*{currentKeyword}*/}
             </div>
         </div>
         <div className={styles.pageInfoRow}>
@@ -52,7 +56,7 @@ const PageInfo = () => {
                 description / 描述
             </div>
             <div className={styles.pageInfoValue}>
-                {currentDescription}
+                {/*{currentDescription}*/}
             </div>
         </div>
         <div className={styles.pageInfoRow}>
@@ -60,10 +64,10 @@ const PageInfo = () => {
                 author / 作者
             </div>
             <div className={styles.pageInfoValue}>
-                {currentAuthor}
+                {/*{currentAuthor}*/}
             </div>
         </div>
     </div>
 };
 
-export default React.memo(PageInfo);
+export default observer(PageInfo);
