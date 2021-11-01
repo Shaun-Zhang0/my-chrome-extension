@@ -14,15 +14,12 @@ const PageInfo = () => {
     // const [currentTitle, setCurrentTitle] = useState<string>('');
     useEffect(() => {
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-            // setCurrentURL(tabs[0].url);
-            // store.currentUrl = tabs[0].url
             store.setCurrentUrl(tabs[0].url);
             store.setCurrentTitle(tabs[0].title);
-
-            // setCurrentTitle(tabs[0].title);
             const bg: any = chrome.extension.getBackgroundPage();
+            store.setCurrentKeywords(bg?.test1()?.pageInfo?.keyword)
             // setCurrentKeyword(bg?.test1()?.pageInfo?.keyword);
-            // setCurrentDescription(bg?.test1()?.pageInfo?.description);
+            store.setCurrentDescription(bg?.test1()?.pageInfo?.description);
             store.setCurrentAuthor(bg?.test1()?.pageInfo?.author);
         });
     }, []);
@@ -42,7 +39,7 @@ const PageInfo = () => {
                 title / 标题
             </div>
             <div className={styles.pageInfoValue}>
-                {/*{currentTitle}*/}
+                {store.currentTitle}
             </div>
         </div>
         <div className={styles.pageInfoRow}>
@@ -50,7 +47,7 @@ const PageInfo = () => {
                 keyword / 关键字
             </div>
             <div className={styles.pageInfoValue}>
-                {/*{currentKeyword}*/}
+                {store.currentKeyword}
             </div>
         </div>
         <div className={styles.pageInfoRow}>

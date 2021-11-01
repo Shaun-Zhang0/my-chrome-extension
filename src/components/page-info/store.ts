@@ -47,6 +47,9 @@ class PageInfoStore extends BaseStore implements IPageInfoStore{
     setCurrentTitle(title: string){
         this.currentTitle = title;
     };
+    setCurrentKeywords(keywords:string){
+        this.currentKeyword = keywords;
+    }
 
     /**
      * 获取当前页面的author
@@ -54,6 +57,14 @@ class PageInfoStore extends BaseStore implements IPageInfoStore{
      */
     setCurrentAuthor(author:string){
         this.currentAuthor = author;
+    }
+
+    /**
+     * 获取页面的描述
+     * @param description
+     */
+    setCurrentDescription(description:string){
+        this.currentDescription = description;
     }
     use(){
         super.use();
