@@ -18,7 +18,6 @@ const PageInfo = () => {
             store.setCurrentTitle(tabs[0].title);
             const bg: any = chrome.extension.getBackgroundPage();
             store.setCurrentKeywords(bg?.test1()?.pageInfo?.keyword)
-            // setCurrentKeyword(bg?.test1()?.pageInfo?.keyword);
             store.setCurrentDescription(bg?.test1()?.pageInfo?.description);
             store.setCurrentAuthor(bg?.test1()?.pageInfo?.author);
         });
@@ -55,7 +54,7 @@ const PageInfo = () => {
                 description / 描述
             </div>
             <div className={styles.pageInfoValue}>
-                {/*{currentDescription}*/}
+                {store.currentDescription}
             </div>
         </div>
         <div className={styles.pageInfoRow}>
@@ -63,7 +62,7 @@ const PageInfo = () => {
                 author / 作者
             </div>
             <div className={styles.pageInfoValue}>
-                {/*{currentAuthor}*/}
+                {store.currentAuthor}
             </div>
         </div>
     </div>
