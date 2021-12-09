@@ -1,12 +1,13 @@
 import React, {useEffect, useState, useRef} from "react"
 import cx from "classnames"
+
 const styles = require("./index.less");
 const VideoInfo = () => {
     const [videoUrl, setVideoUrl] = useState("");
     const [videoSize, setVideoSize] = useState(0); // 通过 XHR 的响应头的 content-length 获取。 单位: kb
     const [videoRate, setVideoRate] = useState(0); // 通过 video组件 获取视频的长度。 单位: 秒
     const [videoTime, setVideoTime] = useState(0); // video 时间
-    const [videoFirstFrameImg,setVideoFirstFrameImg] = useState(''); // 视频首帧图
+    const [videoFirstFrameImg, setVideoFirstFrameImg] = useState(''); // 视频首帧图
     const [loading, setLoading] = useState(false); // 请求状态
     const videoFirstFrameRef: any = useRef(null); // 用于存储video第一帧的图片
     const isVideo = (path: string) => {
@@ -60,7 +61,7 @@ const VideoInfo = () => {
      * 更新首帧的图片
      */
     useEffect(() => {
-       getVideoFirstFrame();
+        getVideoFirstFrame();
     }, [videoTime]);
     /**
      * 视频相关信息
@@ -109,25 +110,25 @@ const VideoInfo = () => {
              * 即时获取可能会获取不到对应的第一帧图
              * 故采取设置一个时间较短的定时器来实现
              */
-           setTimeout(()=>{
-               const canvas: any = document.createElement('canvas');
-               canvas.width = videoEl.current.videoWidth;
-               canvas.height = videoEl.current.videoHeight;
-               canvas.getContext('2d').drawImage(videoEl.current, 0, 0);
+            setTimeout(() => {
+                const canvas: any = document.createElement('canvas');
+                canvas.width = videoEl.current.videoWidth;
+                canvas.height = videoEl.current.videoHeight;
+                canvas.getContext('2d').drawImage(videoEl.current, 0, 0);
 
-               const img = canvas.toDataURL('image/png');
-               setVideoFirstFrameImg(img);
-           },50)
+                const img = canvas.toDataURL('image/png');
+                setVideoFirstFrameImg(img);
+            }, 50)
         });
     };
 
     /**
      * 导出图片
      */
-    const downloadImg = ()=>{
+    const downloadImg = () => {
         const a = document.createElement('a');
         a.style.display = 'none';
-        a.download = `video-poster-${new Date ().getTime ()}`;
+        a.download = `video-poster-${new Date().getTime()}`;
         a.href = videoFirstFrameImg;
         a.target = '_blank';
         document.body.appendChild(a);
