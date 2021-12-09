@@ -15,6 +15,15 @@ interface INavItem {
     icon: string
 }
 
+/**
+ * 索引id的映射
+ */
+const NAV_ACTIVE_INDEX = {
+    "PAGE_INFO": 0,
+    "VIDEO_INFO": 1,
+    "URL_MODES": 2,
+}
+
 const Popup = () => {
     const [count, setCount] = useState(0);
     const [currentURL, setCurrentURL] = useState<string>();
@@ -41,25 +50,28 @@ const Popup = () => {
     /**
      *  渲染选项卡列表
      */
-    const navItem = useCallback(() => {
+    const renderNavItem = useCallback(() => {
         return navItemArr.map((item) => {
             return <div className={cx(styles.navItem, navActiveIndex === item.id && 'active', item.disable && 'disable')} key={item.id} onClick={() => setNavItemActiveIndex(item.id)}>
                 {/*<img src={item.icon}/>*/}
-                <Icon className={styles.navIcon} type={item.icon} />
+                <Icon className={styles.navIcon} type={item.icon}/>
                 <span className={styles.navItemName}>{item.name}</span>
             </div>
         })
     }, [navActiveIndex]);
-    const showContent = useCallback(() => {
+    /**
+     * 渲染主内容`
+     */
+    const renderShowContent = useCallback(() => {
         switch (navActiveIndex) {
-            case 0:
+            case NAV_ACTIVE_INDEX.PAGE_INFO:
                 return <PageInfo/>;
-            case 1:
+            case NAV_ACTIVE_INDEX.VIDEO_INFO:
                 return <VideoInfo/>;
-            case 2:
+            case NAV_ACTIVE_INDEX.URL_MODES:
                 return <UrlModes/>;
             default:
-                return <PageInfo/>;
+                return;
         }
     }, [navActiveIndex]);
 
@@ -67,10 +79,10 @@ const Popup = () => {
         <div id={'root'}>
             <div className={styles.root}>
                 <div className={styles.navContainer}>
-                    {navItem()}
+                    {renderNavItem()}
                 </div>
                 <div className={styles.showContainer}>
-                    {showContent()}
+                    {renderShowContent()}
                 </div>
             </div>
         </div>

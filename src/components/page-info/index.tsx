@@ -7,11 +7,6 @@ const styles = require("./index.less");
 
 const PageInfo = () => {
     const store = useStore(() => new PageInfoStore());
-    // const [currentURL, setCurrentURL] = useState<string>('');
-    // const [currentKeyword, setCurrentKeyword] = useState<string>('');
-    // const [currentDescription, setCurrentDescription] = useState<string>('');
-    // const [currentAuthor, setCurrentAuthor] = useState<string>('');
-    // const [currentTitle, setCurrentTitle] = useState<string>('');
     useEffect(() => {
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             store.setCurrentUrl(tabs[0].url);

@@ -9,8 +9,8 @@ interface IStore {
  * @param createStoreFn
  * @returns Object
  */
-const useStore = (createStoreFn: Function):any=>{
-    const store:IStore = useMemo(()=>createStoreFn() ,[]);
+const useStore = (createStoreFn: Function): any => {
+    const store: IStore = useMemo(() => createStoreFn(), []);
     store?.use();
     return store;
 }

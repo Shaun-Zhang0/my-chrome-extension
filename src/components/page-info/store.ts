@@ -1,11 +1,11 @@
 import {observable} from 'mobx';
 import BaseStore from '../../utils/hooks/base-store';
 
-interface IPageInfoStore  {
+interface IPageInfoStore {
     currentUrl: string,
 }
 
-class PageInfoStore extends BaseStore implements IPageInfoStore{
+class PageInfoStore extends BaseStore implements IPageInfoStore {
     /**
      * 当前页面的地址
      * @type {string}
@@ -36,7 +36,7 @@ class PageInfoStore extends BaseStore implements IPageInfoStore{
      * 获取当前页面的url
      * @param url
      */
-    setCurrentUrl(url:string){
+    setCurrentUrl(url: string) {
         this.currentUrl = url;
     };
 
@@ -44,10 +44,15 @@ class PageInfoStore extends BaseStore implements IPageInfoStore{
      * 获取当前页面的title
      * @param title
      */
-    setCurrentTitle(title: string){
+    setCurrentTitle(title: string) {
         this.currentTitle = title;
     };
-    setCurrentKeywords(keywords:string){
+
+    /**
+     * 获取当前页面的关键字
+     * @param keywords
+     */
+    setCurrentKeywords(keywords: string) {
         this.currentKeyword = keywords;
     }
 
@@ -55,7 +60,7 @@ class PageInfoStore extends BaseStore implements IPageInfoStore{
      * 获取当前页面的author
      * @param author
      */
-    setCurrentAuthor(author:string){
+    setCurrentAuthor(author: string) {
         this.currentAuthor = author;
     }
 
@@ -63,11 +68,13 @@ class PageInfoStore extends BaseStore implements IPageInfoStore{
      * 获取页面的描述
      * @param description
      */
-    setCurrentDescription(description:string){
+    setCurrentDescription(description: string) {
         this.currentDescription = description;
     }
-    use(){
+
+    use() {
         super.use();
     }
 }
+
 export default PageInfoStore;
