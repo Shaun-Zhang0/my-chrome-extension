@@ -16,6 +16,7 @@ const UrlModes = () => {
     const renderModeItem = useCallback(() => {
         return Object.keys(UrlMode).map(i => {
             const isActive = store.activeIndex.indexOf(UrlMode[i]) > 0
+            console.log({isActive, urlMode: UrlMode[i]})
             return <div className={cx(styles.modeItem, isActive && styles.activeItem)} onClick={() => store.onItemClick(UrlMode[i])}>{UrlMode[i]}</div>
         })
     }, []);
@@ -26,6 +27,7 @@ const UrlModes = () => {
             {renderModeItem()}
         </div>
     </div>
+
 };
 
 export default observer(UrlModes);
