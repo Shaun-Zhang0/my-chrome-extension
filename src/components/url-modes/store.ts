@@ -3,6 +3,7 @@ import {useEffect} from 'react';
 import UseMount from '../../utils/hooks/use-mount';
 import {UrlMode} from '../../url_mode';
 import * as Url from 'url';
+import {map} from 'jquery';
 
 class UrlModesStore {
     /**
@@ -52,13 +53,14 @@ class UrlModesStore {
      *
      */
     freshModeStatus = () => {
-        chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+        chrome.tabs.query({active: true, currentWindow: true}, tabs => {
             console.log(tabs[0].url)
             alert(tabs[0].url)
-            Object.keys(UrlMode).map(item=>{
-                if(tabs[0].url&&tabs[0].url.indexOf(UrlMode[item])>0){
+            const modes = UrlMode;
+            Object.keys(UrlMode).map(item => {
+                if (tabs[0].url && tabs[0].url.indexOf(UrlMode[item]) > 0) {
                     // @ts-ignore
-                    this.activeIndex.push(UrlMode[item])
+                    this.activeIndex.push(UrlMode.item)
                 }
             })
 
@@ -67,7 +69,7 @@ class UrlModesStore {
 
     use() {
 
-        UseMount(()=>{
+        UseMount(() => {
             this.freshModeStatus()
         })
     }
