@@ -1,4 +1,4 @@
-# 1.0.0 (2022-06-02)
+## 0.0.1 (2022-06-02)
 
 
 ### Bug Fixes
@@ -26,6 +26,7 @@
 * 完成page-info的mobx方案 改造 ([b38c982](https://github.com/Shaun-Zhang0/my-chrome-extension/commit/b38c9822438d7f7228597187ffa53f7b76ecfa2c))
 * 完善注释 ([1e16cc4](https://github.com/Shaun-Zhang0/my-chrome-extension/commit/1e16cc4c5a32040d2827aba082862b443b6f2442))
 * 完善注释 ([1a9ccaf](https://github.com/Shaun-Zhang0/my-chrome-extension/commit/1a9ccaf9f4ddf6a4baecab1ad82698c8c83a982a))
+* 修改生成changeLog.md的命令 ([d061662](https://github.com/Shaun-Zhang0/my-chrome-extension/commit/d061662fbfe4689367feaae1d031154cd64bb1fa))
 * 制作mock ([0522999](https://github.com/Shaun-Zhang0/my-chrome-extension/commit/052299913ee1c32293c44d91cd7c8a1f1c80accc))
 * 制作mock ([6da7010](https://github.com/Shaun-Zhang0/my-chrome-extension/commit/6da7010466f30bce7eaa163d47614a68762f5d0d))
 * url-modes改造为mobx-store模式, 新增useMount ([faf6385](https://github.com/Shaun-Zhang0/my-chrome-extension/commit/faf638530c4d2a1cbe7a64cf909b79105440e525))
