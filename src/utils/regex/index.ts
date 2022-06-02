@@ -5,7 +5,7 @@ function regex(type: string, val: any): Boolean {
             reg = /\.(mp4|avi|wmv|mpg|mpeg|mov|rm|ram|swf|flv)/;
             break;
         default:
-            reg = /\S /
+            reg = /\S/
             break;
     }
 

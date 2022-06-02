@@ -77,6 +77,9 @@ class VideoInfoStore implements IVideoInfo {
      * 点击提交按钮时回调
      */
     onSubmitBtnClick = (): void => {
+        if(!this.videoUrl){
+            alert('请先输入视频地址')
+        }
         if (!regex('video', this.videoUrl)/**当前地址不是一个视频地址*/) {
             return;
         } else {
@@ -98,7 +101,7 @@ class VideoInfoStore implements IVideoInfo {
                     this.videoRate = Math.floor(this.videoSize / 1000 * 8 / this.videoTime)
                 }
             };
-            xhr.send()
+            xhr.send();
         }
     }
     /**
@@ -108,7 +111,8 @@ class VideoInfoStore implements IVideoInfo {
     videoInit = (): void => {
         /**
          * 即时获取可能会获取不到对应的第一帧图
-         * 故采取设置一个时间较短的定时器来实现
+         * 故采取设置一个较短时间的定时器来实现
+         * 经过多次尝试 50ms可以准确获取到图片 在视频播放上并没有影响
          */
         setTimeout(() => {
             const canvas: any = document.createElement('canvas');

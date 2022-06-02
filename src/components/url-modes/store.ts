@@ -63,7 +63,6 @@ class UrlModesStore {
                     this.activeIndex.push(UrlMode.item)
                 }
             })
-
         });
     }
 
