@@ -27,6 +27,10 @@ class PageInfoStore extends BaseStore implements IPageInfoStore {
      * 当前页面的标题
      */
     @observable currentTitle = '';
+    /**
+     * base的引用地址
+     */
+    @observable baseUrl = '';
 
     constructor() {
         super();
@@ -70,6 +74,10 @@ class PageInfoStore extends BaseStore implements IPageInfoStore {
      */
     setCurrentDescription(description: string) {
         this.currentDescription = description;
+    }
+
+    setBaseUrl(url: string) {
+        this.baseUrl = url;
     }
 
     use() {

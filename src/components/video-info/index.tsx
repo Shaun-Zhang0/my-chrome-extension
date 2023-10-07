@@ -37,6 +37,8 @@ const VideoInfo = () => {
                 </div>
                 <div className={styles.videoInfoValue}>
                     {store.videoSize / 1000 * 8}kb
+                    <br/>
+                    {store.videoSize / 1000 * 8 / 1024} Mb
                 </div>
             </div>
             <div className={styles.videoInfoRow}>

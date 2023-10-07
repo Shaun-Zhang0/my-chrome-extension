@@ -3,6 +3,7 @@ import {observer} from 'mobx-react';
 import useStore from "../../utils/hooks/use-store";
 import PageInfoStore from "./store"
 import {observable} from 'mobx';
+
 const styles = require("./index.less");
 
 const PageInfo = () => {
@@ -15,17 +16,27 @@ const PageInfo = () => {
             store.setCurrentKeywords(bg?.test1()?.pageInfo?.keyword)
             store.setCurrentDescription(bg?.test1()?.pageInfo?.description);
             store.setCurrentAuthor(bg?.test1()?.pageInfo?.author);
+            // store.setBaseUrl(bg?.test1()?.pageInfo?.baseUrl)
+            store.setBaseUrl(bg?.test1()?.pageInfo?.baseUrl)
         });
     }, []);
     return <div className={styles.pageInfoRoot}>
         <div className={styles.pageTitle}>当前页面信息：</div>
         <div className={styles.pageInfoRow}>
-        {/*<div className={styles.pageInfoRow}>*/}
+            {/*<div className={styles.pageInfoRow}>*/}
             <div className={styles.pageInfoRowHeader}>
-                 url / 当前页面地址
+                url / 当前页面地址
             </div>
             <div className={styles.pageInfoValue}>
                 {store.currentUrl}
+            </div>
+        </div>
+        <div className={styles.pageInfoRow}>
+            <div className={styles.pageInfoRowHeader}>
+                base
+            </div>
+            <div className={styles.pageInfoValue}>
+                {store.baseUrl}
             </div>
         </div>
         <div className={styles.pageInfoRow}>

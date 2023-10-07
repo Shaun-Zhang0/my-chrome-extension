@@ -55,7 +55,7 @@ class UrlModesStore {
     freshModeStatus = () => {
         chrome.tabs.query({active: true, currentWindow: true}, tabs => {
             console.log(tabs[0].url)
-            alert(tabs[0].url)
+            // alert(tabs[0].url)
             const modes = UrlMode;
             Object.keys(UrlMode).map(item => {
                 if (tabs[0].url && tabs[0].url.indexOf(UrlMode[item]) > 0) {

@@ -1,4 +1,4 @@
-let currentPageInfo:any = {};
+let currentPageInfo: any = {};
 
 chrome.runtime.onMessage.addListener(
     function (data) {
