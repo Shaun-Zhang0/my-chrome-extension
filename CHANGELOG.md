@@ -1,4 +1,4 @@
-## 0.0.1 (2022-06-02)
+## 0.0.1 (2023-10-08)
 
 
 ### Bug Fixes
@@ -11,6 +11,7 @@
 * 2021-09-08 ([de395bd](https://github.com/Shaun-Zhang0/my-chrome-extension/commit/de395bd37b8c46f9fcee5a87637c1159c78dfd86))
 * 2021-09-12 ([34dc12c](https://github.com/Shaun-Zhang0/my-chrome-extension/commit/34dc12c9b9a769ac86d09bc48f56ff594958d503))
 * 2021-10-03 ([c51abdd](https://github.com/Shaun-Zhang0/my-chrome-extension/commit/c51abdda599475cd35849a3e6c958878092de038))
+* 2023-10-07 ([f47c59d](https://github.com/Shaun-Zhang0/my-chrome-extension/commit/f47c59d8d25d7732f5c2c89d5c6515c61199922c))
 * 补充"noImplicitAny": false - 解决jsx Element语法报错的问题 ([bc78f59](https://github.com/Shaun-Zhang0/my-chrome-extension/commit/bc78f59f2dab30a59e849e3b7788d5cf62d7c4d8))
 * 发布到github仓库进行版本管理 ([6356ad4](https://github.com/Shaun-Zhang0/my-chrome-extension/commit/6356ad4502d1f2201e85f551f43d8b35917b3cad))
 * 发布到github仓库进行版本管理 ([572473a](https://github.com/Shaun-Zhang0/my-chrome-extension/commit/572473acdf1092478b57b000990ac1886ea0c130))
