@@ -1,12 +1,12 @@
 {
   "name": "chrome-extension-typescript-starter",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "chrome-extension-typescript-starter",
   "main": "index.js",
   "scripts": {
     "watch": "webpack --config webpack/webpack.dev.js --watch",
     "build": "webpack --config webpack/webpack.prod.js",
-    "log": "rimraf CHANGELOG.md&&conventional-changelog -p angular -i CHANGELOG.md -s\n",
+    "log": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "clean": "rimraf dist",
     "test": "npx jest",
     "style": "prettier --write \"src/**/*.{ts,tsx}\""
