@@ -79,6 +79,7 @@ class VideoInfoStore implements IVideoInfo {
     onSubmitBtnClick = (): void => {
         if(!this.videoUrl){
             alert('请先输入视频地址')
+            return;
         }
         if (!regex('video', this.videoUrl)/**当前地址不是一个视频地址*/) {
             return;

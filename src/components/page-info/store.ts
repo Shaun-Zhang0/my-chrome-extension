@@ -1,8 +1,15 @@
 import {observable} from 'mobx';
 import BaseStore from '../../utils/hooks/base-store';
+import {useMount} from 'ahooks';
+import autobind from 'autobind-decorator';
 
 interface IPageInfoStore {
-    currentUrl: string,
+    currentUrl: string | undefined,
+    currentTitle: string | undefined,
+    currentKeyword: string | undefined,
+    currentDescription: string | undefined,
+    currentAuthor: string | undefined,
+    baseUrl: string | undefined
 }
 
 class PageInfoStore extends BaseStore implements IPageInfoStore {
@@ -40,7 +47,8 @@ class PageInfoStore extends BaseStore implements IPageInfoStore {
      * 获取当前页面的url
      * @param url
      */
-    setCurrentUrl(url: string) {
+    @autobind
+    setCurrentUrl(url) {
         this.currentUrl = url;
     };
 
@@ -48,7 +56,7 @@ class PageInfoStore extends BaseStore implements IPageInfoStore {
      * 获取当前页面的title
      * @param title
      */
-    setCurrentTitle(title: string) {
+    setCurrentTitle(title) {
         this.currentTitle = title;
     };
 
@@ -56,7 +64,7 @@ class PageInfoStore extends BaseStore implements IPageInfoStore {
      * 获取当前页面的关键字
      * @param keywords
      */
-    setCurrentKeywords(keywords: string) {
+    setCurrentKeywords(keywords) {
         this.currentKeyword = keywords;
     }
 
@@ -82,6 +90,20 @@ class PageInfoStore extends BaseStore implements IPageInfoStore {
 
     use() {
         super.use();
+        useMount(() => {
+            const _this = this;
+            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+                _this.setCurrentUrl(tabs[0].url);
+                _this.setCurrentTitle(tabs[0].title);
+                const bg: any = chrome.extension.getBackgroundPage();
+                _this.setCurrentKeywords(bg?.getCurrentPageInfo()?.pageInfo?.keyword)
+                _this.setCurrentDescription(bg?.getCurrentPageInfo()?.pageInfo?.description);
+                _this.setCurrentAuthor(bg?.getCurrentPageInfo()?.pageInfo?.author);
+                _this.setBaseUrl(bg?.getCurrentPageInfo()?.pageInfo?.baseUrl)
+            });
+        })
+
+
     }
 }
 

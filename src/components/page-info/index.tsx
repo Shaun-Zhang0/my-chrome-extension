@@ -8,18 +8,6 @@ const styles = require("./index.less");
 
 const PageInfo = () => {
     const store = useStore(() => new PageInfoStore());
-    useEffect(() => {
-        chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-            store.setCurrentUrl(tabs[0].url);
-            store.setCurrentTitle(tabs[0].title);
-            const bg: any = chrome.extension.getBackgroundPage();
-            store.setCurrentKeywords(bg?.test1()?.pageInfo?.keyword)
-            store.setCurrentDescription(bg?.test1()?.pageInfo?.description);
-            store.setCurrentAuthor(bg?.test1()?.pageInfo?.author);
-            // store.setBaseUrl(bg?.test1()?.pageInfo?.baseUrl)
-            store.setBaseUrl(bg?.test1()?.pageInfo?.baseUrl)
-        });
-    }, []);
     return <div className={styles.pageInfoRoot}>
         <div className={styles.pageTitle}>当前页面信息：</div>
         <div className={styles.pageInfoRow}>

@@ -6,8 +6,8 @@ chrome.runtime.onMessage.addListener(
     }
 );
 
-function test1() {
+function getCurrentPageInfo() {
     return currentPageInfo;
 }
 
-window.test1 = test1;
+window.getCurrentPageInfo = getCurrentPageInfo;
