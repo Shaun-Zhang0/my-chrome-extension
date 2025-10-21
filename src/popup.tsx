@@ -32,9 +32,23 @@ const Popup = () => {
     }, [count]);
 
     useEffect(() => {
-        chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-            setCurrentURL(tabs[0].url);
-            setCurrentTabID(tabs[0].id);
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            const tab = tabs[0];
+            if (tab && tab.url && tab.id) {
+                setCurrentURL(tab.url);
+                setCurrentTabID(tab.id);
+
+                // 【新增】向 Service Worker 请求页面信息
+                chrome.runtime.sendMessage({ action: 'GET_CURRENT_PAGE_INFO' }, (response) => {
+                    if (response && response.pageInfo) {
+                        console.log('Page Info Received:', response.pageInfo);
+                        // 假设您有一个状态来存储 pageInfo，并把它传递给 <PageInfo/>
+                        // setPageData(response.pageInfo);
+                    } else {
+                        console.error('Service Worker未返回页面信息或返回错误。');
+                    }
+                });
+            }
         });
     }, []);
 
